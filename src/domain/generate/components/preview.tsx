@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
+import { fadeIn, fadeInUp } from "~/lib/animations";
 
 type Props = {
   file: File;
@@ -18,7 +20,7 @@ const Preview = ({ file }: Props) => {
       : `${Math.floor(size / 1000)} KB`;
 
   return (
-    <div className="flex flex-col items-center">
+    <motion.div {...fadeIn} className="flex flex-col items-center">
       <Image
         src={url}
         alt="Original image"
@@ -31,7 +33,7 @@ const Preview = ({ file }: Props) => {
         <br />
         {formattedSize}
       </small>
-    </div>
+    </motion.div>
   );
 };
 
