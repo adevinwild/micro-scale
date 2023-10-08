@@ -1,5 +1,7 @@
 import Generate from "~/domain/generate";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Button } from "~/components/ui/button";
+import { Github } from "lucide-react";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -17,57 +19,84 @@ export default function Home() {
         </div>
       </nav>
       <Generate />
-      <section className="fixed bottom-0 left-0 p-4 flex flex-col items-center text-center lg:items-start lg:text-left opacity-75 hover:opacity-100 transition-all bg-zinc-950 border-t-4 border-zinc-400 w-full">
-        <p className="text-xs text-zinc-400">
-          Made by{" "}
+      <footer className="fixed bottom-0 left-0 p-4 flex items-center justify-between transition-all bg-zinc-200 border-t border-zinc-300  w-full">
+        <section className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <p className="text-xs text-zinc-600">
+            Made by{" "}
+            <a
+              className="text-zinc-950"
+              href="https://github.com/adevinwild"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              adevinwild
+            </a>{" "}
+            for the{" "}
+            <a
+              className="text-zinc-950"
+              href="https://thefullstack.network/hackathon/competition"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Fullstack Network Hackathon #1
+            </a>
+          </p>
+          <p className="text-xs text-zinc-600">
+            Using{" "}
+            <a
+              className="text-zinc-950"
+              href="https://nextjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Next.js 13
+            </a>{" "}
+            ,{" "}
+            <a
+              className="text-zinc-950"
+              href="https://vercel.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Vercel
+            </a>{" "}
+            ,{" "}
+            <a
+              className="text-zinc-950"
+              href="https://ui.shadcn.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              shadcn/ui
+            </a>{" "}
+            and{" "}
+            <a
+              className="text-zinc-950"
+              href="https://replicate.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Replicate
+            </a>
+          </p>
+        </section>
+        <section>
           <a
-            className="text-zinc-50"
-            href="https://github.com/adevinwild"
+            href="https://github.com/adevinwild/micro-scale"
             target="_blank"
             rel="noopener noreferrer"
           >
-            adevinwild
-          </a>{" "}
-          for the{" "}
-          <a
-            className="text-zinc-50"
-            href="https://thefullstack.network/hackathon/competition"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Fullstack Network Hackathon #1
+            <Button
+              variant="default"
+              size="sm"
+              className="flex items-center gap-x-2"
+            >
+              <Github size={16} />
+              <span>GitHub</span>
+            </Button>
           </a>
-        </p>
-        <p className="text-xs text-zinc-400">
-          Using{" "}
-          <a
-            className="text-zinc-50"
-            href="https://nextjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Next.js 13
-          </a>{" "}
-          ,{" "}
-          <a
-            className="text-zinc-50"
-            href="https://vercel.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vercel
-          </a>{" "}
-          and{" "}
-          <a
-            className="text-zinc-50"
-            href="https://replicate.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Replicate
-          </a>
-        </p>
-      </section>
+        </section>
+      </footer>
     </main>
   );
 }

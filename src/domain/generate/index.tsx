@@ -74,7 +74,7 @@ const Generate = () => {
     >
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
-          <Form key="form-root" {...form}>
+          <Form {...form}>
             <motion.form
               key="form"
               onSubmit={submit}
@@ -235,7 +235,7 @@ const Generate = () => {
             aria-label="Upscaling Note"
           >
             <small className="text-zinc-500 text-xs font-medium">Note</small>
-            <small className="text-zinc-400 text-xs">
+            <small className="text-zinc-500 text-xs">
               Upscaling can take up to a minute, do not refresh the page.
             </small>
           </motion.div>

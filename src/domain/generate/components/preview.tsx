@@ -28,7 +28,7 @@ const Preview = ({ file }: Props) => {
         height={128}
         className="rounded-xl mx-0"
       />
-      <small className="text-[10px] mt-1 text-center text-zinc-400">
+      <small className="text-[10px] mt-1 text-center text-zinc-500">
         {name}
         <br />
         {formattedSize}
