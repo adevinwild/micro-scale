@@ -11,6 +11,11 @@ export function getMetadata(
   return {
     description,
     title,
+    icons: [
+      {
+        url: "https://micro-scale.vercel.com/_static/favicon.ico",
+      },
+    ],
     openGraph: {
       description,
       title,
