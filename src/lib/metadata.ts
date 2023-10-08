@@ -4,7 +4,7 @@ export function getMetadata(
   { title, description, image } = {
     title: "µScale - Upscale your images using AI",
     description:
-      "µScale is an open-source image upscaling tool that uses AI to upscale your images.",
+      "µScale is an open-source image upscaling tool that uses AI to upscale your images up to 4x their original size.",
     image: "https://micro-scale.vercel.com/_static/thumbnail.png",
   }
 ): Metadata {

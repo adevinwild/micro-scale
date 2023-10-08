@@ -11,8 +11,8 @@ export default function Home() {
           <h1 className={plusJakartaSans.className}>
             <span className="font-extralight text-yellow-500">µ</span>scale
           </h1>
-          <p className="text-zinc-400 text-xs">
-            Upscale and improve any images with AI
+          <p className="text-zinc-500 text-xs">
+            Upscale any images with AI up to 4x their original size
           </p>
         </div>
       </nav>
