@@ -30,13 +30,13 @@ export async function POST(req: NextRequest) {
 
   if (!contentType || !contentType.startsWith("image/")) {
     return NextResponse.json(
-      { error: "Invalid content type" },
+      { message: "Invalid content type" },
       { status: 400 }
     );
   }
 
   if (contentLength > MAX_FILE_SIZE) {
-    return NextResponse.json({ error: "File too large" }, { status: 400 });
+    return NextResponse.json({ message: "File too large" }, { status: 413 });
   }
 
   const filename = `${nanoid()}.${contentType.split("/")[1]}`;

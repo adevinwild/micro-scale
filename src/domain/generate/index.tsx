@@ -1,7 +1,7 @@
 "use client";
 
 import { Download, Sparkles } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -47,13 +47,13 @@ const Generate = () => {
             control={form.control}
             name="file"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='w-full'>
                 <FormLabel>Select an image</FormLabel>
                 <FormControl>
                   <Input
                     ref={inputFileRef}
                     type="file"
-                    className="cursor-pointer"
+                    className="cursor-pointer w-full"
                     accept=".jpg,.png,.webp"
                     disabled={isSubmitting}
                     onChange={(e) =>
@@ -68,6 +68,13 @@ const Generate = () => {
               </FormItem>
             )}
           />
+          {!!form.formState.errors.root?.serverError?.message && (
+            <div className="w-full flex justify-start">
+              <small className="text-red-500 text-left">
+                {form.formState.errors.root?.serverError.message}
+              </small>
+            </div>
+          )}
           <div className="flex items-center gap-x-2 justify-end w-full">
             {hasFile && !isSubmitting && (
               <Button

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { MAX_FILE_SIZE } from "~/lib/constants";
 import useGenerate, { GenerationResponse } from "./use-generate";
-import { useToast } from "~/components/ui/use-toast";
 import usePasteFile from "~/hooks/use-paste";
 
 const FormSchema = z.object({
@@ -42,7 +41,6 @@ export default function useGenerateForm({
   });
 
   const generateMutation = useGenerate();
-  const { toast } = useToast();
 
   const onPaste = async (file: File) => {
     form.setValue("file", file);
@@ -56,15 +54,16 @@ export default function useGenerateForm({
       const response = await generateMutation.mutateAsync(data.file);
       onFormSuccess(response);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "An error occurred while improving the image",
-      });
-    } finally {
-      reset();
+      if (error instanceof Error) {
+        form.setError("root.serverError", {
+          type: "error",
+          message: error.message,
+        });
+      }
     }
   });
 
+  console.log(form.formState.errors);
   const reset = () => {
     form.reset();
   };

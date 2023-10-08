@@ -17,6 +17,12 @@ export default function useGenerate() {
         method: "POST",
         body: file,
       });
+
+      if (!res.ok) {
+        const { message } = await res.json();
+        throw new Error(message);
+      }
+
       return await res.json();
     } catch (error) {
       setError(error);
