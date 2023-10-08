@@ -19,7 +19,7 @@ export default function Home() {
         </div>
       </nav>
       <Generate />
-      <footer className="fixed bottom-0 left-0 p-4 flex items-center justify-between transition-all bg-zinc-200 border-t border-zinc-300  w-full">
+      <footer className="fixed bottom-0 left-0 p-4 flex flex-col lg:flex-row  gap-y-4  items-center justify-between transition-all bg-zinc-200 border-t border-zinc-300  w-full">
         <section className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <p className="text-xs text-zinc-600">
             Made by{" "}
