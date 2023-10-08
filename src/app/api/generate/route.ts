@@ -1,14 +1,14 @@
-import { put, del } from "@vercel/blob";
-import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 import { nanoid } from "nanoid";
-import replicate from "~/server/replicate";
+import { NextRequest, NextResponse } from "next/server";
+
 import { MAX_FILE_SIZE } from "~/lib/constants";
+import replicate from "~/server/replicate";
 
 export async function POST(req: NextRequest) {
   const file = req.body as ReadableStream;
   const contentType = req.headers.get("content-type");
   const contentLength = Number(req.headers.get("content-length"));
-  const startTime = Date.now();
 
   if (!contentType || !contentType.startsWith("image/")) {
     return NextResponse.json(
