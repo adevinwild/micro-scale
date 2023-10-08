@@ -23,7 +23,7 @@ const Preview = ({ file }: Props) => {
     <motion.div {...fadeIn} className="flex flex-col items-center">
       <Image
         src={url}
-        alt="Original image"
+        alt="Image preview"
         width={128}
         height={128}
         className="rounded-xl mx-0"

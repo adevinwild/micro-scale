@@ -11,17 +11,17 @@ export default function Home() {
           <h1 className={plusJakartaSans.className}>
             <span className="font-extralight text-yellow-500">µ</span>scale
           </h1>
-          <p className="text-zinc-500 text-xs">
+          <p className="text-zinc-600 text-xs">
             Upscale any images with AI up to 4x their original size
           </p>
         </div>
       </nav>
       <Generate />
-      <section className="fixed bottom-4 left-4 flex flex-col opacity-75 hover:opacity-100 transition-all">
+      <section className="fixed bottom-0 left-0 p-4 flex flex-col items-center text-center lg:items-start lg:text-left opacity-75 hover:opacity-100 transition-all bg-zinc-950 border-t-4 border-zinc-400 w-full">
         <p className="text-xs text-zinc-400">
           Made by{" "}
           <a
-            className="text-zinc-600"
+            className="text-zinc-50"
             href="https://github.com/adevinwild"
             target="_blank"
             rel="noopener noreferrer"
@@ -30,7 +30,7 @@ export default function Home() {
           </a>{" "}
           for the{" "}
           <a
-            className="text-zinc-600"
+            className="text-zinc-50"
             href="https://thefullstack.network/hackathon/competition"
             target="_blank"
             rel="noopener noreferrer"
@@ -41,7 +41,7 @@ export default function Home() {
         <p className="text-xs text-zinc-400">
           Using{" "}
           <a
-            className="text-zinc-600"
+            className="text-zinc-50"
             href="https://nextjs.org"
             target="_blank"
             rel="noopener noreferrer"
@@ -50,7 +50,7 @@ export default function Home() {
           </a>{" "}
           ,{" "}
           <a
-            className="text-zinc-600"
+            className="text-zinc-50"
             href="https://vercel.com"
             target="_blank"
             rel="noopener noreferrer"
@@ -59,7 +59,7 @@ export default function Home() {
           </a>{" "}
           and{" "}
           <a
-            className="text-zinc-600"
+            className="text-zinc-50"
             href="https://replicate.com"
             target="_blank"
             rel="noopener noreferrer"

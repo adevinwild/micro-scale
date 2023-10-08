@@ -68,7 +68,10 @@ const Generate = () => {
   }, [isSubmitting]);
 
   return (
-    <section className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] transition-all lg:w-[32rem] mt-44 lg:mt-20">
+    <section
+      aria-label="Image Upscaling Section"
+      className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] transition-all lg:w-[32rem] mt-44 lg:mt-20"
+    >
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
           <Form key="form-root" {...form}>
@@ -76,6 +79,7 @@ const Generate = () => {
               key="form"
               onSubmit={submit}
               className=" bg-white border p-4 place-items-center rounded-xl grid gap-y-2 w-full"
+              aria-label="Image Upload Form"
             >
               {hasFile && <Preview file={form.watch("file")} />}
 
@@ -97,10 +101,15 @@ const Generate = () => {
                             e.target.files ? e.target.files[0] : null
                           )
                         }
+                        aria-describedby="imageInputDescription"
+                        aria-labelledby="imageInputLabel"
                       />
                     </FormControl>
 
-                    <FormDescription className="text-xs text-zinc-400">
+                    <FormDescription
+                      id="imageInputDescription"
+                      className="text-xs text-zinc-500"
+                    >
                       Supported formats: JPG, PNG, WEBP. Max size: 4MB.
                     </FormDescription>
                     <FormMessage />
@@ -109,7 +118,7 @@ const Generate = () => {
               />
               {!!form.formState.errors.root?.serverError?.message && (
                 <div className="w-full flex justify-start">
-                  <small className="text-red-500 text-left">
+                  <small className="text-red-500 text-left" role="alert">
                     {form.formState.errors.root?.serverError.message}
                   </small>
                 </div>
@@ -121,9 +130,10 @@ const Generate = () => {
                     variant="ghost"
                     className="flex items-center gap-x-2"
                     onClick={showDemo}
+                    aria-label="Show demo"
                   >
                     <FlaskConical size={16} />
-                    <span>Show me a demo</span>
+                    <span>Show demo</span>
                   </Button>
                 )}
                 {hasFile && !isSubmitting && (
@@ -134,6 +144,7 @@ const Generate = () => {
                     disabled={isSubmitting}
                     onClick={reset}
                     className="flex items-center gap-x-2"
+                    aria-label="Reset form"
                   >
                     Reset
                   </Button>
@@ -144,11 +155,12 @@ const Generate = () => {
                   variant={isSubmitting ? "ghost" : "default"}
                   disabled={isSubmitting}
                   className="flex items-center gap-x-2"
+                  aria-label="Upscale image"
                 >
                   {!isSubmitting && (
                     <>
                       <Sparkles size={16} />
-                      <span>Upscale it!</span>
+                      <span>Upscale</span>
                     </>
                   )}
 
@@ -163,9 +175,13 @@ const Generate = () => {
             {...fadeInUp}
             key="generated"
             className=" bg-white border p-4  rounded-xl flex flex-col gap-y-2 w-full"
+            aria-label="Image Upscaled Result"
           >
             <p className="text-base text-zinc-600 font-medium">
-              Tada! <span>🎉</span>
+              Tada!{" "}
+              <span role="img" aria-label="Party popper">
+                🎉
+              </span>
             </p>
             <p className="text-sm text-zinc-500">
               Your image has been upscaled, check it out below.
@@ -187,6 +203,7 @@ const Generate = () => {
                 variant="ghost"
                 size="sm"
                 className="flex items-center gap-x-2"
+                aria-label="Restart upscaling process"
                 onClick={() => {
                   reset();
                   setImages(initialState);
@@ -200,10 +217,11 @@ const Generate = () => {
                 <Button
                   variant="default"
                   size="sm"
+                  aria-label="Download upscaled image"
                   className="flex items-center gap-x-2"
                 >
                   <Download size={16} />
-                  <span>Download image</span>
+                  <span>Download</span>
                 </Button>
               </a>
             </div>
@@ -214,6 +232,7 @@ const Generate = () => {
             {...fadeInUp}
             key="long-time"
             className="flex flex-col w-full gap-y-1 bg-white rounded-xl border p-4"
+            aria-label="Upscaling Note"
           >
             <small className="text-zinc-500 text-xs font-medium">Note</small>
             <small className="text-zinc-400 text-xs">
@@ -226,6 +245,7 @@ const Generate = () => {
             {...fadeInUp}
             key="compare"
             className="border p-4 rounded-xl grid w-full content-start gap-y-2 bg-white"
+            aria-label="Image Comparison Slider"
           >
             <CompareSlider
               original={images.original}
