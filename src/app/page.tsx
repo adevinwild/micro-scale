@@ -1,9 +1,75 @@
 import Generate from "~/domain/generate";
 
+export const metadata = {
+  title: "µscale",
+  description: "Upscale and improve any images with AI",
+};
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="grid content-start gap-y-4 justify-center min-h-[100svh] items-center p-6 lg:p-16 h-full bg-zinc-100">
+      <nav className="fixed top-0 left-0 w-full p-4 flex border-b backdrop-filter backdrop-blur-md">
+        <div className="flex flex-col gap-y-1">
+          <h1>
+            <span className="font-extralight">µ</span>scale
+          </h1>
+          <p className="text-zinc-400 text-xs">
+            Upscale and improve any images with AI
+          </p>
+        </div>
+      </nav>
       <Generate />
+      <section className="fixed bottom-4 left-4 flex flex-col opacity-75 hover:opacity-100 transition-all">
+        <p className="text-xs text-zinc-400">
+          Made by{" "}
+          <a
+            className="text-zinc-600"
+            href="https://github.com/adevinwild"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            adevinwild
+          </a>{" "}
+          for the{" "}
+          <a
+            className="text-zinc-600"
+            href="https://thefullstack.network/hackathon/competition"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Fullstack Network Hackathon #1
+          </a>
+        </p>
+        <p className="text-xs text-zinc-400">
+          Using{" "}
+          <a
+            className="text-zinc-600"
+            href="https://nextjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Next.js 13
+          </a>{" "}
+          ,{" "}
+          <a
+            className="text-zinc-600"
+            href="https://vercel.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vercel
+          </a>{" "}
+          and{" "}
+          <a
+            className="text-zinc-600"
+            href="https://replicate.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Replicate
+          </a>
+        </p>
+      </section>
     </main>
   );
 }
