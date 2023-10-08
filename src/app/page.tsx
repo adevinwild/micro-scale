@@ -1,17 +1,15 @@
 import Generate from "~/domain/generate";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
-export const metadata = {
-  title: "µscale",
-  description: "Upscale and improve any images with AI",
-};
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <main className="grid content-start gap-y-4 justify-center min-h-[100svh] items-center p-6 lg:p-16 h-full bg-zinc-100">
       <nav className="fixed top-0 left-0 w-full p-4 flex border-b backdrop-filter backdrop-blur-md">
         <div className="flex flex-col gap-y-1">
-          <h1>
-            <span className="font-extralight">µ</span>scale
+          <h1 className={plusJakartaSans.className}>
+            <span className="font-extralight text-yellow-500">µ</span>scale
           </h1>
           <p className="text-zinc-400 text-xs">
             Upscale and improve any images with AI
