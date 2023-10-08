@@ -5,7 +5,7 @@ export function getMetadata(
     title: "µScale - Upscale your images using AI",
     description:
       "µScale is an open-source image upscaling tool that uses AI to upscale your images up to 4x their original size.",
-    image: "https://micro-scale.vercel.com/_static/thumbnail.png",
+    image: "https://micro-scale.vercel.app/_static/thumbnail.png",
   }
 ): Metadata {
   return {
@@ -13,7 +13,7 @@ export function getMetadata(
     title,
     icons: [
       {
-        url: "https://micro-scale.vercel.com/_static/favicon.ico",
+        url: "https://micro-scale.vercel.app/_static/favicon.ico",
       },
     ],
     openGraph: {

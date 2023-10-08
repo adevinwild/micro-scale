@@ -14,13 +14,25 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(req: NextRequest) {
-  const id = req.ip ?? "anonymous";
-  const limit = await ratelimit.limit(id ?? "anonymous");
+  const ip =
+    req.headers.get("x-forwarded-for") ||
+    req.headers.get("x-real-ip") ||
+    req.ip;
+
+  console.log(ip);
+  const limit = await ratelimit.limit(ip ?? "anonymous");
 
   if (!limit.success || limit.remaining <= 0) {
     return NextResponse.json(
-      { message: "Too many requests, please try again later." },
-      { status: 429 }
+      { message: "You have reached your request limit for the day." },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Limit": limit.toString(),
+          "X-RateLimit-Remaining": limit.remaining.toString(),
+          "X-RateLimit-Reset": limit.reset.toString(),
+        },
+      }
     );
   }
 
