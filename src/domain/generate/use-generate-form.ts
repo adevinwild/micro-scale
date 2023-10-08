@@ -63,7 +63,6 @@ export default function useGenerateForm({
     }
   });
 
-  console.log(form.formState.errors);
   const reset = () => {
     form.reset();
   };
