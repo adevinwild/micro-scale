@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ||
     req.ip;
 
-  console.log(ip);
   const limit = await ratelimit.limit(ip ?? "anonymous");
 
   if (!limit.success || limit.remaining <= 0) {
