@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./public/_static/thumbnail.jpg" width="75%" >
+    <img src="./public/_static/thumbnail.jpg" width="100%" >
 </p>
 
 <h1 align="center">
@@ -13,4 +13,10 @@
 <small >
     Made for the <a href="https://thefullstack.network/hackathon/competition">Fullstack Network Hackathon #1</a>
 </small>
+</p>
+
+<p align="center">
+    <a href="https://micro-scale.vercel.app">
+        <kbd>Upload my image now!</kbd>
+    </a>
 </p>
