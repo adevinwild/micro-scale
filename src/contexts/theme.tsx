@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ReactNode,
   createContext,
@@ -21,10 +20,27 @@ type ThemeProviderProps = {
   children: ReactNode;
 };
 
+function getInitialTheme() {
+  let initialTheme = localStorage.getItem("_theme");
+
+  if (!initialTheme && window.matchMedia) {
+    // Check system theme
+
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
+
+    localStorage.setItem("_theme", systemTheme);
+
+    initialTheme = systemTheme;
+  }
+
+  return (initialTheme ? initialTheme : "light") as Theme;
+}
+
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    (localStorage.getItem("_theme") as Theme) || "light"
-  );
+  const [theme, setTheme] = useState(getInitialTheme);
 
   const contextValue: ThemeContext = {
     theme,
