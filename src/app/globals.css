@@ -13,3 +13,11 @@ body,
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+.smooth {
+  @apply transition-all duration-300 ease-out;
+}
+
+input::file-selector-button {
+  @apply dark:text-zinc-50;
+}
