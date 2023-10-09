@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ReactNode,
   createContext,
@@ -21,7 +22,9 @@ type ThemeProviderProps = {
 };
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(
+    (localStorage.getItem("_theme") as Theme) || "light"
+  );
 
   const contextValue: ThemeContext = {
     theme,
@@ -29,12 +32,21 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   };
 
   useEffect(() => {
-    const htmlElement = document.querySelector("html");
-    if (htmlElement) {
-      htmlElement.classList.remove("light", "dark");
-      htmlElement.classList.add(theme);
-    }
-  }, [theme]);
+    const updateHTMLClass = () => {
+      const htmlElement = document.querySelector("html");
+      if (htmlElement) {
+        htmlElement.classList.remove("light", "dark");
+        htmlElement.classList.add(theme);
+      }
+    };
+
+    const updateLocalStorage = () => {
+      localStorage.setItem("_theme", theme);
+    };
+
+    updateHTMLClass();
+    updateLocalStorage();
+  }, [setTheme, theme]);
 
   return (
     <ThemeContext.Provider value={contextValue}>

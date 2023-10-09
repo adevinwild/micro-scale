@@ -1,8 +1,8 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Download, FlaskConical, RefreshCw, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -15,10 +15,10 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { fadeInUp } from "~/lib/animations";
 import { CompareSlider } from "./components/compare-slider";
 import Preview from "./components/preview";
 import useGenerateForm from "./use-generate-form";
-import { fadeIn, fadeInUp } from "~/lib/animations";
 
 const initialState: Record<"original" | "improved", string | null> = {
   original: null,
