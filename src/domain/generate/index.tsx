@@ -70,7 +70,7 @@ const Generate = () => {
   return (
     <section
       aria-label="Image Upscaling Section"
-      className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] transition-all lg:w-[32rem] mt-44 lg:mt-20"
+      className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] smooth lg:w-[32rem] mt-44 lg:mt-20"
     >
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
@@ -78,7 +78,7 @@ const Generate = () => {
             <motion.form
               key="form"
               onSubmit={submit}
-              className=" bg-white border p-4 place-items-center rounded-xl grid gap-y-2 w-full"
+              className="grid w-full p-4 bg-white border place-items-center rounded-[20px] gap-y-2 dark:bg-zinc-900 dark:border-zinc-700 smooth dark:shadow-2xl dark:shadow-black"
               aria-label="Image Upload Form"
             >
               {hasFile && <Preview file={form.watch("file")} />}
@@ -88,12 +88,14 @@ const Generate = () => {
                 name="file"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Select / Paste an image</FormLabel>
-                    <FormControl>
+                    <FormLabel className="dark:text-zinc-50 dark:placeholder:text-zinc-50 smooth ">
+                      Select / Paste an image
+                    </FormLabel>
+                    <FormControl className="dark:text-zinc-400 dark:placeholder:text-zinc-400 smooth ">
                       <Input
                         ref={inputFileRef}
                         type="file"
-                        className="cursor-pointer w-full"
+                        className="w-full cursor-pointer "
                         accept=".jpg,.png,.webp"
                         disabled={isSubmitting}
                         onChange={(e) =>
@@ -108,7 +110,7 @@ const Generate = () => {
 
                     <FormDescription
                       id="imageInputDescription"
-                      className="text-xs text-zinc-500"
+                      className="text-xs text-zinc-500 dark:text-zinc-400 smooth"
                     >
                       Supported formats: JPG, PNG, WEBP. Max size: 4MB.
                     </FormDescription>
@@ -117,18 +119,21 @@ const Generate = () => {
                 )}
               />
               {!!form.formState.errors.root?.serverError?.message && (
-                <div className="w-full flex justify-start">
-                  <small className="text-red-500 text-left" role="alert">
+                <div className="flex justify-start w-full">
+                  <small
+                    className="text-left text-red-500 dark:text-red-600"
+                    role="alert"
+                  >
                     {form.formState.errors.root?.serverError.message}
                   </small>
                 </div>
               )}
-              <div className="flex items-center gap-x-2 justify-end w-full mt-4">
+              <div className="flex items-center justify-end w-full mt-4 gap-x-2 ">
                 {!hasFile && !isSubmitting && (
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="flex items-center gap-x-2"
+                    className="flex items-center gap-x-2 dark:text-zinc-50"
                     onClick={showDemo}
                     aria-label="Show demo"
                   >
@@ -138,15 +143,18 @@ const Generate = () => {
                 )}
                 {hasFile && !isSubmitting && (
                   <Button
+                    size="sm"
                     type="reset"
                     variant="outline"
-                    size="sm"
                     disabled={isSubmitting}
                     onClick={reset}
-                    className="flex items-center gap-x-2"
+                    className="flex items-center gap-x-2 dark:text-zinc-50"
                     aria-label="Reset form"
                   >
-                    Reset
+                    <>
+                      <RefreshCw size={16} />
+                      <span>Reset</span>
+                    </>
                   </Button>
                 )}
                 <Button
@@ -170,39 +178,55 @@ const Generate = () => {
             </motion.form>
           </Form>
         )}
+        {longTime && !hasGenerated && (
+          <motion.div
+            {...fadeInUp}
+            key="long-time"
+            className="flex flex-col w-full p-4 bg-white border gap-y-1 rounded-[20px] dark:bg-zinc-900 dark:border-zinc-700 smooth dark:shadow-2xl dark:shadow-black"
+            aria-label="Upscaling Note"
+          >
+            <small className="text-xs font-medium text-zinc-500 dark:text-zinc-50">
+              Note
+            </small>
+            <small className="text-xs text-zinc-500 dark:text-zinc-400">
+              Upscaling can take up to a minute, do not refresh the page.
+            </small>
+          </motion.div>
+        )}
+
         {hasGenerated && (
           <motion.div
             {...fadeInUp}
             key="generated"
-            className=" bg-white border p-4  rounded-xl flex flex-col gap-y-2 w-full"
+            className="flex flex-col w-full p-4 bg-white border rounded-xl gap-y-2 dark:bg-zinc-900 dark:border-zinc-700 dark:shadow-2xl dark:shadow-black"
             aria-label="Image Upscaled Result"
           >
-            <p className="text-base text-zinc-600 font-medium">
+            <p className="text-base font-medium text-zinc-600 dark:text-zinc-50">
               Tada!{" "}
               <span role="img" aria-label="Party popper">
                 🎉
               </span>
             </p>
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               Your image has been upscaled, check it out below.
             </p>
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
               If you like the app please consider{" "}
               <a
                 href="https://github.com/adevinwild/micro-scale"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-600 font-medium underline"
+                className="font-medium underline text-zinc-600 dark:text-zinc-50"
               >
                 staring the repository
               </a>
             </p>
 
-            <div className="flex items-center justify-end gap-x-2 w-full mt-4">
+            <div className="flex items-center justify-end w-full mt-4 gap-x-2">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
-                className="flex items-center gap-x-2"
+                className="flex items-center gap-x-2 dark:text-zinc-50"
                 aria-label="Restart upscaling process"
                 onClick={() => {
                   reset();
@@ -227,24 +251,12 @@ const Generate = () => {
             </div>
           </motion.div>
         )}
-        {longTime && !hasGenerated && (
-          <motion.div
-            {...fadeInUp}
-            key="long-time"
-            className="flex flex-col w-full gap-y-1 bg-white rounded-xl border p-4"
-            aria-label="Upscaling Note"
-          >
-            <small className="text-zinc-500 text-xs font-medium">Note</small>
-            <small className="text-zinc-500 text-xs">
-              Upscaling can take up to a minute, do not refresh the page.
-            </small>
-          </motion.div>
-        )}
+
         {!isSubmitting && !!images.original && !!images.improved && (
           <motion.div
             {...fadeInUp}
             key="compare"
-            className="border p-4 rounded-xl grid w-full content-start gap-y-2 bg-white"
+            className="grid content-start w-full p-4 bg-white border rounded-[20px] gap-y-2 dark:bg-zinc-900 dark:border-zinc-700  dark:shadow-2xl dark:shadow-black"
             aria-label="Image Comparison Slider"
           >
             <CompareSlider
