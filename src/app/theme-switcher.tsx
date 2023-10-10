@@ -1,16 +1,25 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
-import { useThemeContext } from "~/contexts/theme";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const ThemeSwitcher = () => {
-  const { theme, setTheme } = useThemeContext();
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <Skeleton className="w-8 h-8 bg-white border" />;
 
   return (
     <Button
       size="sm"
-      className="flex items-center gap-x-2 dark:text-zinc-50"
+      className="flex items-center dark:text-zinc-50"
       variant="outline"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
