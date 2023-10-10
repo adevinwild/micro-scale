@@ -15,7 +15,7 @@ const ratelimit = new Ratelimit({
 
 export async function POST(req: NextRequest) {
   if (process.env.NODE_ENV === "development") {
-    await new Promise((resolve) => setTimeout(resolve, 6000));
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     return NextResponse.json({
       improved: "https://placehold.co/500x500.png",
       original: "https://placehold.co/500x500.png",

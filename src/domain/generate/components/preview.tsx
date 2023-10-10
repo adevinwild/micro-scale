@@ -26,7 +26,7 @@ const Preview = ({ file }: Props) => {
         alt="Image preview"
         width={128}
         height={128}
-        className="rounded-xl mx-0"
+        className="rounded-xl mx-0 lg:w-[128px] lg:h-[128px] w-[48px] h-[48px] object-cover"
       />
       <small className="text-[10px] mt-1 text-center text-zinc-500">
         {name}

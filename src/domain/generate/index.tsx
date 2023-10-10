@@ -19,6 +19,7 @@ import { fadeInUp } from "~/lib/animations";
 import { CompareSlider } from "./components/compare-slider";
 import Preview from "./components/preview";
 import useGenerateForm from "./use-generate-form";
+import LongTimeNote from "./components/long-time-note";
 
 const initialState: Record<"original" | "improved", string | null> = {
   original: null,
@@ -70,7 +71,7 @@ const Generate = () => {
   return (
     <section
       aria-label="Image Upscaling Section"
-      className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] smooth lg:w-[32rem] mt-44 lg:mt-20"
+      className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] smooth lg:w-[32rem] mt-32 lg:mt-20"
     >
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
@@ -178,21 +179,7 @@ const Generate = () => {
             </motion.form>
           </Form>
         )}
-        {longTime && !hasGenerated && (
-          <motion.div
-            {...fadeInUp}
-            key="long-time"
-            className="flex flex-col w-full p-4 bg-white border gap-y-1 rounded-[20px] dark:bg-zinc-900 dark:border-zinc-700 smooth dark:shadow-2xl dark:shadow-black"
-            aria-label="Upscaling Note"
-          >
-            <small className="text-xs font-medium text-zinc-500 dark:text-zinc-50">
-              Note
-            </small>
-            <small className="text-xs text-zinc-500 dark:text-zinc-400">
-              Upscaling can take up to a minute, do not refresh the page.
-            </small>
-          </motion.div>
-        )}
+        {longTime && !hasGenerated && <LongTimeNote key="long-time-note" />}
 
         {hasGenerated && (
           <motion.div
