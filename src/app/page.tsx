@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import { Github, Menu } from "lucide-react";
+import { Github } from "lucide-react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Button } from "~/components/ui/button";
 import Divider from "~/components/ui/divider";
 import Generate from "~/domain/generate";
+import { MobileMenuToggler } from "./mobile-menu";
 import ThemeSwitcher from "./theme-switcher";
-import { MobileMenu, MobileMenuToggler } from "./mobile-menu";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function Home() {
           >
             <span className="font-medium text-yellow-500">µ</span>scale
           </h1>
-          <p className="hidden text-xs text-zinc-600 dark:text-zinc-400 smooth sm:block">
+          <p className="hidden text-xs text-zinc-6 00 dark:text-zinc-400 smooth sm:block">
             Upscale any images with AI up to 4x their original size
           </p>
         </div>
