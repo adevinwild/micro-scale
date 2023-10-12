@@ -15,6 +15,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@upstash/ratelimit": "^0.4.4",
+    "@vercel/analytics": "^1.1.1",
     "@vercel/blob": "^0.13.0",
     "@vercel/kv": "^0.2.3",
     "class-variance-authority": "^0.7.0",

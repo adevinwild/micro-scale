@@ -602,6 +602,13 @@
   dependencies:
     isomorphic-fetch "^3.0.0"
 
+"@vercel/analytics@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-1.1.1.tgz#2a712378a95014a548b4f9d2ae1ea0721433908d"
+  integrity sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==
+  dependencies:
+    server-only "^0.0.1"
+
 "@vercel/blob@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@vercel/blob/-/blob-0.13.0.tgz#5bdfaf8b9d966d0479d2c3b8e3c61fe997317c05"
