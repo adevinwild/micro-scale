@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 import Appwrite from "~/server/appwrite";
 
-import { MAX_FILE_SIZE } from "~/lib/constants";
+import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "~/lib/constants";
 import replicate from "~/server/replicate";
 
 const ratelimit = new Ratelimit({
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type");
   const contentLength = Number(req.headers.get("content-length"));
 
-  if (!contentType || !contentType.startsWith("image/")) {
+  if (!contentType || !ALLOWED_FILE_TYPES.includes(contentType)) {
     return NextResponse.json(
       { message: "Invalid content type" },
       { status: 400 }

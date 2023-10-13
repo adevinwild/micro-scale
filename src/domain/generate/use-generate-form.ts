@@ -1,12 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { MAX_FILE_SIZE } from "~/lib/constants";
+import { MAX_FILE_SIZE, ALLOWED_FILE_TYPES } from "~/lib/constants";
 import useGenerate, { GenerationResponse } from "./use-generate";
 import usePasteFile from "~/hooks/use-paste";
 
-// allow png,jpg,webp
-const allowedFileTypes = ["image/png", "image/jpeg", "image/webp"];
+// allow png,jpg
 
 const FormSchema = z.object({
   file: z.any().superRefine((val, ctx) => {
@@ -28,7 +27,7 @@ const FormSchema = z.object({
       return;
     }
 
-    if (!allowedFileTypes.includes(val.type)) {
+    if (!ALLOWED_FILE_TYPES.includes(val.type)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "File type not supported",
