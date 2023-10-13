@@ -183,6 +183,10 @@ const Generate = () => {
                     >
                       Supported formats: JPG, PNG. Max size: 4MB
                     </FormDescription>
+                    <FormDescription className="p-2 text-xs text-blue-800 rounded smooth bg-blue-50">
+                      <b>Note</b>: Images with a high resolution will not be
+                      processed.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
