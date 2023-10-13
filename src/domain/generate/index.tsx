@@ -1,11 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Cookies from "js-cookie";
 import { Download, FlaskConical, RefreshCw, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
-import { Prediction } from "replicate";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -23,6 +23,7 @@ import LongTimeNote from "./components/long-time-note";
 import Preview from "./components/preview";
 import { GenerationResponse } from "./use-generate";
 import useGenerateForm from "./use-generate-form";
+import FirstVisitDialog from "./components/first-visit-dialog";
 
 const initialState: Record<"original" | "improved", string | null> = {
   original: null,
@@ -43,6 +44,8 @@ const Generate = () => {
 
   const [isPolling, setIsPolling] = useState(false);
   const [predictionId, setPredictionId] = useState<string | null>(null);
+
+  const [showFirstVisitDialog, setShowFirstVisitDialog] = useState(false);
 
   const onFormSuccess = (response: GenerationResponse) => {
     setPredictionId(response.id);
@@ -91,6 +94,9 @@ const Generate = () => {
     };
   }, [isGenerating]);
 
+  /**
+   * ? Handle polling success
+   */
   useEffect(() => {
     if (!pollingQuery.data) {
       return;
@@ -115,11 +121,25 @@ const Generate = () => {
     }
   }, [pollingQuery.data, pollingQuery.data?.time]);
 
+  /**
+   * ? Handle first visit
+   */
+  useEffect(() => {
+    const firstVisit = Cookies.get("firstVisit");
+    if (!firstVisit) {
+      Cookies.set("firstVisit", "true", { expires: 365 });
+      setShowFirstVisitDialog(true);
+    }
+  }, []);
+
   return (
     <section
       aria-label="Image Upscaling Section"
       className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] smooth lg:w-[32rem] mt-32 lg:mt-20"
     >
+      {showFirstVisitDialog && (
+        <FirstVisitDialog close={() => setShowFirstVisitDialog(false)} />
+      )}
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
           <Form {...form}>
