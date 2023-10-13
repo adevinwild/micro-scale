@@ -64,7 +64,7 @@ export const MobileMenu = () => {
               <span className="text-yellow-500 font-extralight">µ</span>scale
             </h1>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 smooth">
-              Upscale any images with AI up to 4x their original size
+              Upscale your low quality images with AI up to 4x their original size
             </p>
           </div>
         </div>

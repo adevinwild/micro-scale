@@ -23,7 +23,7 @@ export default function Home() {
             <span className="font-medium text-yellow-500">µ</span>scale
           </h1>
           <p className="hidden text-xs text-zinc-6 00 dark:text-zinc-400 smooth sm:block">
-            Upscale any images with AI up to 4x their original size
+            Upscale your low quality images with AI up to 4x their original size
           </p>
         </div>
         <MobileMenuToggler />

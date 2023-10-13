@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    Upscale any images up to 4x with AI.
+    Upscale your low quality images to 4x with AI.
 </p>
 <p align="center">
 <small >

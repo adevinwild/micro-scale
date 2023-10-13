@@ -14,25 +14,27 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(req: NextRequest) {
-  const ip =
-    req.headers.get("x-forwarded-for") ||
-    req.headers.get("x-real-ip") ||
-    req.ip;
+  if (process.env.NODE_ENV === "production") {
+    const ip =
+      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-real-ip") ||
+      req.ip;
 
-  const limit = await ratelimit.limit(ip ?? "anonymous");
+    const limit = await ratelimit.limit(ip ?? "anonymous");
 
-  if (!limit.success || limit.remaining <= 0) {
-    return NextResponse.json(
-      { message: "You have reached your request limit for the day." },
-      {
-        status: 429,
-        headers: {
-          "X-RateLimit-Limit": limit.toString(),
-          "X-RateLimit-Remaining": limit.remaining.toString(),
-          "X-RateLimit-Reset": limit.reset.toString(),
-        },
-      }
-    );
+    if (!limit.success || limit.remaining <= 0) {
+      return NextResponse.json(
+        { message: "You have reached your request limit for the day." },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": limit.toString(),
+            "X-RateLimit-Remaining": limit.remaining.toString(),
+            "X-RateLimit-Reset": limit.reset.toString(),
+          },
+        }
+      );
+    }
   }
 
   const file = req.body as ReadableStream;
@@ -80,7 +82,7 @@ export async function POST(req: NextRequest) {
 
     const prediction = await replicate.predictions.create({
       version:
-        "42fed1c4974146d4d2414e2be2c5277c7fcf05fcc3a73abf41610695738c1d7b",
+        "32fdb2231d00a10d33754cc2ba794a2dfec94216579770785849ce6f149dbc69",
       input: {
         scale: 4,
         image: blob.url,

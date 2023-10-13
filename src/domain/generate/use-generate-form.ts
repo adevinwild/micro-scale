@@ -5,6 +5,9 @@ import { MAX_FILE_SIZE } from "~/lib/constants";
 import useGenerate, { GenerationResponse } from "./use-generate";
 import usePasteFile from "~/hooks/use-paste";
 
+// allow png,jpg,webp
+const allowedFileTypes = ["image/png", "image/jpeg", "image/webp"];
+
 const FormSchema = z.object({
   file: z.any().superRefine((val, ctx) => {
     if (!(val instanceof File)) {
@@ -20,6 +23,15 @@ const FormSchema = z.object({
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "File is too large",
+        path: [],
+      });
+      return;
+    }
+
+    if (!allowedFileTypes.includes(val.type)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "File type not supported",
         path: [],
       });
       return;

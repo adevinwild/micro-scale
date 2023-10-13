@@ -161,7 +161,7 @@ const Generate = () => {
                       id="imageInputDescription"
                       className="text-xs text-zinc-500 dark:text-zinc-400 smooth"
                     >
-                      Supported formats: JPG, PNG, WEBP. Max size: 4MB.
+                      Supported formats: JPG, PNG, WEBP. Max size: 4MB
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
