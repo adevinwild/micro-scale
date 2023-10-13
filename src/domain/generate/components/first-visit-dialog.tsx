@@ -34,8 +34,9 @@ const FirstVisitDialog = ({ close }: { close: () => void }) => {
               target="_blank"
               rel="noreferrer"
             >
-              star on my GitHub repo 🙌
+              star on my GitHub repo
             </a>{" "}
+            🙌
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
