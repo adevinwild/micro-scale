@@ -57,8 +57,6 @@ const Generate = () => {
     }
   );
 
-  console.log(pollingQuery);
-
   const { form, submit, reset } = useGenerateForm({ onFormSuccess });
 
   const { isSubmitting } = form.formState;
@@ -222,8 +220,7 @@ const Generate = () => {
                     </>
                   )}
 
-                  {isGenerating ||
-                    (pollingQuery.isLoading && <span>Upscaling image...</span>)}
+                  {isGenerating && <span>Upscaling image...</span>}
                 </Button>
               </div>
             </motion.form>

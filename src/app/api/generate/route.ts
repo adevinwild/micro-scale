@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
   const SITE_URL =
     process.env.NODE_ENV === "development"
-      ? "https://7f8f-2a01-cb1c-8104-d500-a98d-c719-3dd3-d02c.ngrok-free.app"
+      ? "https://2d39-2a01-cb1c-8104-d500-a98d-c719-3dd3-d02c.ngrok-free.app"
       : "https://micro-scale.vercel.app";
 
   try {
