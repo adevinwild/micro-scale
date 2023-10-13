@@ -9,7 +9,7 @@ import { MAX_FILE_SIZE } from "~/lib/constants";
 import replicate from "~/server/replicate";
 
 const ratelimit = new Ratelimit({
-  limiter: Ratelimit.slidingWindow(150, "1 d"), // 10 requests per 1 day
+  limiter: Ratelimit.slidingWindow(15, "1 d"), // 15 requests per 1 day
   redis: kv,
 });
 
