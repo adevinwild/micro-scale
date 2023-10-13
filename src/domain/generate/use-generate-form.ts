@@ -35,6 +35,30 @@ const FormSchema = z.object({
       });
       return;
     }
+
+    // now check the image resolution
+
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(val);
+    img.classList.add("hidden");
+    document.body.appendChild(img);
+
+    return new Promise((resolve) => {
+      img.onload = () => {
+        const { width, height } = img;
+        document.body.removeChild(img);
+        if (width >= 1280 || height >= 1280) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message:
+              "Image with higher resolution than 1280x1280 is not supported",
+            path: [],
+          });
+        }
+
+        resolve(null);
+      };
+    });
   }),
 });
 

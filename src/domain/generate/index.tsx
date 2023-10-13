@@ -183,18 +183,15 @@ const Generate = () => {
                     >
                       Supported formats: JPG, PNG. Max size: 4MB
                     </FormDescription>
-                    <FormDescription className="p-2 text-xs text-blue-600 border border-blue-600 rounded smooth bg-blue-50 dark:bg-blue-950 dark:text-blue-400 dark:border-blue-400">
-                      <b>Note</b>: Images with a high resolution will not be
-                      processed.
-                    </FormDescription>
-                    <FormMessage />
+
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
               {!!form.formState.errors.root?.serverError?.message && (
                 <div className="flex justify-start w-full">
                   <small
-                    className="text-left text-red-500 dark:text-red-600"
+                    className="text-[xs] text-left text-red-500 dark:text-red-600"
                     role="alert"
                   >
                     {form.formState.errors.root?.serverError.message}
