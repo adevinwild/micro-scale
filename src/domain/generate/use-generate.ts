@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 export type GenerationResponse = {
-  improved: string;
-  original: string;
+  id: string;
 };
 
 export default function useGenerate() {

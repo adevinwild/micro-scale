@@ -3,7 +3,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, FlaskConical, RefreshCw, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import useSWR from "swr";
 
+import { Prediction } from "replicate";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -17,9 +19,10 @@ import {
 import { Input } from "~/components/ui/input";
 import { fadeInUp } from "~/lib/animations";
 import { CompareSlider } from "./components/compare-slider";
-import Preview from "./components/preview";
-import useGenerateForm from "./use-generate-form";
 import LongTimeNote from "./components/long-time-note";
+import Preview from "./components/preview";
+import { GenerationResponse } from "./use-generate";
+import useGenerateForm from "./use-generate-form";
 
 const initialState: Record<"original" | "improved", string | null> = {
   original: null,
@@ -31,17 +34,39 @@ const demoState: Record<"original" | "improved", string | null> = {
   improved: "/demo/after.png",
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Generate = () => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [longTime, setLongTime] = useState(false);
   const [images, setImages] = useState(initialState);
 
-  const { form, submit, reset } = useGenerateForm({ onFormSuccess: setImages });
+  const [isPolling, setIsPolling] = useState(false);
+  const [predictionId, setPredictionId] = useState<string | null>(null);
+
+  const onFormSuccess = (response: GenerationResponse) => {
+    setPredictionId(response.id);
+    setIsPolling(true);
+  };
+
+  const pollingQuery = useSWR(
+    !!predictionId ? `/api/predictions/${predictionId}` : null,
+    fetcher,
+    {
+      refreshInterval: 1000,
+    }
+  );
+
+  console.log(pollingQuery);
+
+  const { form, submit, reset } = useGenerateForm({ onFormSuccess });
 
   const { isSubmitting } = form.formState;
 
   const hasFile = Boolean(form.watch("file"));
   const hasGenerated = Boolean(images.original && images.improved);
+
+  const isGenerating = isSubmitting || isPolling;
 
   const showDemo = () => {
     setImages(demoState);
@@ -51,7 +76,7 @@ const Generate = () => {
    * ? Handle long generation times
    */
   useEffect(() => {
-    if (!isSubmitting) {
+    if (!isGenerating) {
       setLongTime(false);
       return;
     }
@@ -59,14 +84,38 @@ const Generate = () => {
     const LONG_GENERATION_TIME = 5000; // 5s
 
     const timer = setTimeout(() => {
-      if (!isSubmitting) return;
+      if (!isGenerating) return;
       setLongTime(true);
     }, LONG_GENERATION_TIME);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [isSubmitting]);
+  }, [isGenerating]);
+
+  useEffect(() => {
+    if (!pollingQuery.data) {
+      return;
+    }
+
+    const { prediction } = pollingQuery.data as {
+      prediction: {
+        is_generated: boolean;
+        output: string;
+        input: string;
+      };
+      time: number;
+    };
+
+    if (prediction.is_generated) {
+      setImages({
+        original: prediction.input,
+        improved: prediction.output,
+      });
+      setPredictionId(null);
+      setIsPolling(false);
+    }
+  }, [pollingQuery.data, pollingQuery.data?.time]);
 
   return (
     <section
@@ -98,12 +147,13 @@ const Generate = () => {
                         type="file"
                         className="w-full cursor-pointer "
                         accept=".jpg,.png,.webp"
-                        disabled={isSubmitting}
-                        onChange={(e) =>
-                          field.onChange(
+                        disabled={isGenerating}
+                        onChange={(e) => {
+                          if (isGenerating) return;
+                          return field.onChange(
                             e.target.files ? e.target.files[0] : null
-                          )
-                        }
+                          );
+                        }}
                         aria-describedby="imageInputDescription"
                         aria-labelledby="imageInputLabel"
                       />
@@ -130,7 +180,7 @@ const Generate = () => {
                 </div>
               )}
               <div className="flex items-center justify-end w-full mt-4 gap-x-2 ">
-                {!hasFile && !isSubmitting && (
+                {!hasFile && !isGenerating && (
                   <Button
                     size="sm"
                     variant="ghost"
@@ -142,12 +192,11 @@ const Generate = () => {
                     <span>Show demo</span>
                   </Button>
                 )}
-                {hasFile && !isSubmitting && (
+                {hasFile && !isGenerating && (
                   <Button
                     size="sm"
                     type="reset"
                     variant="outline"
-                    disabled={isSubmitting}
                     onClick={reset}
                     className="flex items-center gap-x-2 dark:text-zinc-50"
                     aria-label="Reset form"
@@ -161,19 +210,20 @@ const Generate = () => {
                 <Button
                   size="sm"
                   type="submit"
-                  variant={isSubmitting ? "ghost" : "default"}
-                  disabled={isSubmitting}
+                  variant={isGenerating ? "ghost" : "default"}
+                  disabled={isGenerating}
                   className="flex items-center gap-x-2"
                   aria-label="Upscale image"
                 >
-                  {!isSubmitting && (
+                  {!isGenerating && (
                     <>
                       <Sparkles size={16} />
                       <span>Upscale</span>
                     </>
                   )}
 
-                  {isSubmitting && <span>Upscaling image...</span>}
+                  {isGenerating ||
+                    (pollingQuery.isLoading && <span>Upscaling image...</span>)}
                 </Button>
               </div>
             </motion.form>
@@ -239,7 +289,7 @@ const Generate = () => {
           </motion.div>
         )}
 
-        {!isSubmitting && !!images.original && !!images.improved && (
+        {!isGenerating && !!images.original && !!images.improved && (
           <motion.div
             {...fadeInUp}
             key="compare"
