@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 import Appwrite from "~/server/appwrite";
 
-import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from "~/lib/constants";
+import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, SITE_URL } from "~/lib/constants";
 import replicate from "~/server/replicate";
 
 const ratelimit = new Ratelimit({
@@ -59,11 +59,6 @@ export async function POST(req: NextRequest) {
     access: "public",
   });
 
-  const SITE_URL =
-    process.env.NODE_ENV === "development"
-      ? "https://2d39-2a01-cb1c-8104-d500-a98d-c719-3dd3-d02c.ngrok-free.app"
-      : "https://micro-scale.vercel.app";
-
   try {
     const savedPrediction = await Appwrite.database.createDocument(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
@@ -76,15 +71,15 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    const webhook = new URL(`${SITE_URL}/api/webhook/save-image`);
+    const webhook = new URL(`${SITE_URL}/api/webhook/safety`);
     // setting an id to the webhook so we can identify the prediction later
     webhook.searchParams.set("id", savedPrediction.$id);
+    webhook.searchParams.set("blobURL", blob.url);
 
     const prediction = await replicate.predictions.create({
       version:
-        "32fdb2231d00a10d33754cc2ba794a2dfec94216579770785849ce6f149dbc69",
+        "88c3624a13d60bb5ecd0cb215e49e39d2a2135c211bcb94fc801d3def46803c4",
       input: {
-        scale: 4,
         image: blob.url,
       },
       webhook: webhook.toString(),

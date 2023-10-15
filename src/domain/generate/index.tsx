@@ -107,9 +107,27 @@ const Generate = () => {
         is_generated: boolean;
         output: string;
         input: string;
+        nsfw: boolean;
       };
       time: number;
     };
+
+    if (prediction.nsfw) {
+      reset();
+      setImages(initialState);
+      form.setError("file", {
+        type: "nsfw",
+        message: "NSFW images are not allowed.",
+      });
+      setPredictionId(null);
+      setIsPolling(false);
+
+      if (inputFileRef.current) {
+        inputFileRef.current.value = "";
+      }
+
+      return;
+    }
 
     if (prediction.is_generated) {
       setImages({
@@ -119,7 +137,7 @@ const Generate = () => {
       setPredictionId(null);
       setIsPolling(false);
     }
-  }, [pollingQuery.data, pollingQuery.data?.time]);
+  }, [pollingQuery.data, pollingQuery.data?.time, pollingQuery.data?.nsfw]);
 
   /**
    * ? Handle first visit
