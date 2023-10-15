@@ -1,3 +1,4 @@
+import { del } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 import { SITE_URL } from "~/lib/constants";
 import appwrite from "~/server/appwrite";
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
   const predictionId = req.nextUrl.searchParams.get("id");
   const blobURL = req.nextUrl.searchParams.get("blobURL");
 
-  if (!predictionId) {
+  if (!predictionId || !blobURL) {
     return NextResponse.json(
       { message: "An error has occured." },
       { status: 500 }
@@ -28,6 +29,8 @@ export async function POST(req: NextRequest) {
         nsfw: true,
       }
     );
+
+    await del(blobURL as string);
 
     return NextResponse.json({ message: "NSFW" }, { status: 422 });
   }
