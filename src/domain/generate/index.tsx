@@ -2,7 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Cookies from "js-cookie";
-import { Download, FlaskConical, RefreshCw, Sparkles } from "lucide-react";
+import {
+  AlertCircle,
+  Download,
+  FlaskConical,
+  RefreshCw,
+  Sparkles,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
@@ -200,6 +206,12 @@ const Generate = () => {
                       className="text-xs text-zinc-500 dark:text-zinc-400 smooth"
                     >
                       Supported formats: JPG, PNG. Max size: 4MB
+                    </FormDescription>
+                    <FormDescription className="flex items-center p-2 text-xs text-red-600 border border-red-500 rounded gap-x-2 smooth bg-red-50 dark:bg-red-950 dark:text-red-100 dark:border-red-400">
+                      <AlertCircle size={16} />{" "}
+                      <span>
+                        NFSW images are not allowed and will be rejected.
+                      </span>
                     </FormDescription>
 
                     <FormMessage className="text-xs" />
