@@ -22,12 +22,18 @@ type Prediction = {
     get: string;
   };
 };
+
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as Prediction;
 
-  const params = new URL(req.url).searchParams;
+  const predictionId = req.nextUrl.searchParams.get("id");
 
-  const predictionId = params.get("id");
+  if (!predictionId) {
+    return NextResponse.json(
+      { message: "An error has occured." },
+      { status: 500 }
+    );
+  }
 
   try {
     await appwrite.database.updateDocument(
