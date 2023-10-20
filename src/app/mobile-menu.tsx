@@ -4,12 +4,14 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { Github, Menu } from "lucide-react";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "~/components/ui/button";
 import { useMobileMenu } from "~/contexts/mobile-menu";
 import { fadeInUp } from "~/lib/animations";
 import ThemeSwitcher from "./theme-switcher";
-import { useEffect, useState } from "react";
+
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const MobileMenuToggler = () => {
   const [mounted, setMounted] = useState(false);
@@ -41,8 +43,6 @@ export const MobileMenuToggler = () => {
   );
 };
 
-const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
-
 export const MobileMenu = () => {
   const { close } = useMobileMenu();
 
@@ -64,7 +64,8 @@ export const MobileMenu = () => {
               <span className="text-yellow-500 font-extralight">µ</span>scale
             </h1>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 smooth">
-              Upscale your low quality images with AI up to 4x their original size
+              Upscale your low quality images with AI up to 4x their original
+              size
             </p>
           </div>
         </div>
