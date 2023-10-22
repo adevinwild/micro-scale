@@ -13,7 +13,24 @@ const ratelimit = new Ratelimit({
   redis: kv,
 });
 
+export const corsHeaders = {
+  "Access-Control-Allow-Origin": SITE_URL,
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(req: NextRequest) {
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+    return NextResponse.json(
+      { message: "Maintenance mode is enabled" },
+      { status: 503, headers: corsHeaders }
+    );
+  }
+
   if (process.env.NODE_ENV === "production") {
     const ip =
       req.headers.get("x-forwarded-for") ||
@@ -28,6 +45,7 @@ export async function POST(req: NextRequest) {
         {
           status: 429,
           headers: {
+            ...corsHeaders,
             "X-RateLimit-Limit": limit.toString(),
             "X-RateLimit-Remaining": limit.remaining.toString(),
             "X-RateLimit-Reset": limit.reset.toString(),
@@ -44,12 +62,15 @@ export async function POST(req: NextRequest) {
   if (!contentType || !ALLOWED_FILE_TYPES.includes(contentType)) {
     return NextResponse.json(
       { message: "Invalid content type" },
-      { status: 400 }
+      { status: 400, headers: corsHeaders }
     );
   }
 
   if (contentLength > MAX_FILE_SIZE) {
-    return NextResponse.json({ message: "File too large" }, { status: 413 });
+    return NextResponse.json(
+      { message: "File too large" },
+      { status: 413, headers: corsHeaders }
+    );
   }
 
   const filename = `${nanoid()}.${contentType.split("/")[1]}`;
@@ -89,17 +110,22 @@ export async function POST(req: NextRequest) {
     if (prediction.error) {
       return NextResponse.json(
         { message: "Something went wrong" },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       );
     }
 
-    return NextResponse.json({
-      id: savedPrediction.$id,
-    });
+    return NextResponse.json(
+      {
+        id: savedPrediction.$id,
+      },
+      {
+        headers: corsHeaders,
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
