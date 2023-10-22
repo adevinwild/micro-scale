@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import appwrite from "~/server/appwrite";
 
 export async function GET(
-  req: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } }
 ) {
   if (!params.id) {

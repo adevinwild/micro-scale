@@ -13,15 +13,11 @@ const ratelimit = new Ratelimit({
   redis: kv,
 });
 
-export const corsHeaders = {
+const corsHeaders = {
   "Access-Control-Allow-Origin": SITE_URL,
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
-
-export async function OPTIONS(req: NextRequest) {
-  return NextResponse.json({}, { headers: corsHeaders });
-}
 
 export async function POST(req: NextRequest) {
   if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
@@ -128,4 +124,8 @@ export async function POST(req: NextRequest) {
       { status: 500, headers: corsHeaders }
     );
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeaders });
 }
