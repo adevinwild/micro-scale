@@ -15,8 +15,8 @@ const ratelimit = new Ratelimit({
 
 export const corsHeaders = {
   "Access-Control-Allow-Origin": SITE_URL,
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
 export async function OPTIONS(req: NextRequest) {
