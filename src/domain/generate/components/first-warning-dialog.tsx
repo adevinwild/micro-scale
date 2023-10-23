@@ -19,8 +19,8 @@ const FirstWarningDialog = ({ close }: { close: () => void }) => {
           </DialogTitle>
           <DialogDescription>
             Just over <b>+1,400</b> of you have came across µScale and{" "}
-            <b>+880</b> have been upscaled, and it&apos;s just mind-blowing to
-            me!
+            <b>+880</b> images have been upscaled, and it&apos;s just
+            mind-blowing to me!
           </DialogDescription>
 
           <DialogDescription className="pt-2">
@@ -44,9 +44,9 @@ const FirstWarningDialog = ({ close }: { close: () => void }) => {
             </a>
           </DialogDescription>
           <DialogDescription>
-            Your vote would mean the world to me. Instead, please continue
-            enjoying the software and feel free to share your feedback on my X
-            profile.
+            Your vote would mean the world to me.
+            <br /> I invite you to continue enjoying the software and feel free
+            to share your feedback on my X profile.
           </DialogDescription>
 
           <DialogDescription className="flex items-center justify-center pt-2 text-center lg:justify-start lg:text-left gap-x-2">
