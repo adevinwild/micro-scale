@@ -5,6 +5,20 @@ import appwrite from "~/server/appwrite";
 import replicate from "~/server/replicate";
 
 export async function POST(req: NextRequest) {
+  if (process.env.NEXT_PUBLIC_END_MODE === "true") {
+    return NextResponse.json(
+      { message: "µScale is no longer active. Join me on my X @adevinwild!" },
+      { status: 503 }
+    );
+  }
+
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+    return NextResponse.json(
+      { message: "Maintenance mode is enabled" },
+      { status: 503 }
+    );
+  }
+
   const body = (await req.json()) as { output: { nsfw_detected: boolean } };
 
   const predictionId = req.nextUrl.searchParams.get("id");

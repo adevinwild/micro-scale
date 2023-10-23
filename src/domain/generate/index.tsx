@@ -25,11 +25,11 @@ import {
 import { Input } from "~/components/ui/input";
 import { fadeInUp } from "~/lib/animations";
 import { CompareSlider } from "./components/compare-slider";
+import FirstWarningDialog from "./components/first-warning-dialog";
 import LongTimeNote from "./components/long-time-note";
 import Preview from "./components/preview";
 import { GenerationResponse } from "./use-generate";
 import useGenerateForm from "./use-generate-form";
-import FirstVisitDialog from "./components/first-visit-dialog";
 
 const initialState: Record<"original" | "improved", string | null> = {
   original: null,
@@ -50,8 +50,6 @@ const Generate = () => {
 
   const [isPolling, setIsPolling] = useState(false);
   const [predictionId, setPredictionId] = useState<string | null>(null);
-
-  const [showFirstVisitDialog, setShowFirstVisitDialog] = useState(false);
 
   const onFormSuccess = (response: GenerationResponse) => {
     setPredictionId(response.id);
@@ -145,14 +143,15 @@ const Generate = () => {
     }
   }, [pollingQuery.data, pollingQuery.data?.time, pollingQuery.data?.nsfw]);
 
+  const [firstWarningVisible, showFirstWarning] = useState(false);
   /**
-   * ? Handle first visit
+   * ? Handle near app removal cookie
    */
   useEffect(() => {
-    const firstVisit = Cookies.get("firstVisit");
-    if (!firstVisit) {
-      Cookies.set("firstVisit", "true", { expires: 365 });
-      setShowFirstVisitDialog(true);
+    const warning1 = Cookies.get("warning-1");
+    if (!warning1) {
+      Cookies.set("warning1", "true", { expires: 365 });
+      showFirstWarning(true);
     }
   }, []);
 
@@ -161,9 +160,10 @@ const Generate = () => {
       aria-label="Image Upscaling Section"
       className="flex flex-col items-center gap-y-4 h-full w-[90vw] sm:w-[24rem] smooth lg:w-[32rem] mt-32 lg:mt-20"
     >
-      {showFirstVisitDialog && (
-        <FirstVisitDialog close={() => setShowFirstVisitDialog(false)} />
+      {firstWarningVisible && (
+        <FirstWarningDialog close={() => showFirstWarning(false)} />
       )}
+
       <AnimatePresence mode="popLayout">
         {!hasGenerated && (
           <Form {...form}>

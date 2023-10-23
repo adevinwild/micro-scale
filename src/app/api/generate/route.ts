@@ -20,6 +20,13 @@ const corsHeaders = {
 };
 
 export async function POST(req: NextRequest) {
+  if (process.env.NEXT_PUBLIC_END_MODE === "true") {
+    return NextResponse.json(
+      { message: "µScale is no longer active. Join me on my X @adevinwild!" },
+      { status: 503, headers: corsHeaders }
+    );
+  }
+
   if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
     return NextResponse.json(
       { message: "Maintenance mode is enabled" },

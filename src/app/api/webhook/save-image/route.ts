@@ -24,6 +24,20 @@ type Prediction = {
 };
 
 export async function POST(req: NextRequest) {
+  if (process.env.NEXT_PUBLIC_END_MODE === "true") {
+    return NextResponse.json(
+      { message: "µScale is no longer active. Join me on my X @adevinwild!" },
+      { status: 503 }
+    );
+  }
+
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+    return NextResponse.json(
+      { message: "Maintenance mode is enabled" },
+      { status: 503 }
+    );
+  }
+
   const body = (await req.json()) as Prediction;
 
   const predictionId = req.nextUrl.searchParams.get("id");

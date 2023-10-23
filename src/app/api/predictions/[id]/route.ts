@@ -5,6 +5,20 @@ export async function GET(
   _: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  if (process.env.NEXT_PUBLIC_END_MODE === "true") {
+    return NextResponse.json(
+      { message: "µScale is no longer active. Join me on my X @adevinwild!" },
+      { status: 503 }
+    );
+  }
+
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true") {
+    return NextResponse.json(
+      { message: "Maintenance mode is enabled" },
+      { status: 503 }
+    );
+  }
+
   if (!params.id) {
     return NextResponse.json({ message: "Missing id" }, { status: 400 });
   }
